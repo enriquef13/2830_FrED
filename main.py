@@ -7,6 +7,18 @@ from user_interface import UserInterface
 from fan import Fan
 from spooler import Spooler
 from extruder import Extruder
+import signal
+import os
+
+def custom_handler(signum, frame):
+    print("\nDetected keyboard interrupt (Ctrl+C)")
+    print("Switching temperature OFF and exiting...")
+    GPIO.setup(6, GPIO.OUT)
+    GPIO.output(6, GPIO.LOW)
+    # Can add all the required GPIOs needed to turn off
+    os._exit(0)
+    
+signal.signal(signal.SIGINT, custom_handler)
 
 def hardware_control(gui: UserInterface) -> None:
     """Thread to handle hardware control"""
