@@ -63,6 +63,7 @@ def hardware_control(gui: UserInterface) -> None:
                             
             elif gui.device_started:
                 extruder.temperature_control_loop(current_time)
+                gui.fiber_camera.camera_feedback(current_time)
                 extruder.stepper_control_loop()
                 
             fan.control_loop()
